@@ -10,7 +10,7 @@
             <th>Task</th>
             <th>Person</th>
             <th>Status</th>
-            <th>Deadline</th>
+            <th>Deadlinesss</th>
             <th>Notes</th>
         </tr>
         <tr>
