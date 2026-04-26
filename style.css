@@ -1,0 +1,82 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #7eb2dd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-logo {
+    display: block;      /* Allows us to use margin: auto to center it */
+    margin: 0 auto;      /* Centers the image horizontally */
+    width: 300px;        /* Adjust this number to change the size */
+    height: auto;        /* Maintains the original proportions */
+    margin-bottom: 1px; /* Adds space between the logo and the text */
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+h2 {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 2.5rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.login-btn {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #0056b3;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+label {
+    font-family: 'Roboto', sans-serif; /* You can change this to any font you've linked */
+    font-weight: bold;                /* Makes the labels stand out */
+    color: #253d6a;                   /* Using that Navy Blue from your logo */
+    font-size: 0.9rem;                /* Sets a professional size */
+}
