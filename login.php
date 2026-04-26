@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Ahoy!Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
+
+
 <body>
     <div class="login-container">
         <form class="login-form">
@@ -20,7 +23,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <button type="submit" class="login-btn">Login</button>
-            <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+            <p class="signup-link">Don't have an account? <a href="sign_up.php">Sign up</a></p>
         </form>
     </div>
 </body>
