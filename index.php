@@ -1,21 +1,58 @@
 <!DOCTYPE html>
 <html>
+<head>
+	<link rel="stylesheet" href="style.css">
+	<title>Dashboard</title>
+</head>
 <body>
 <?php include 'navbar.php'; ?>
 
-    <h2>Phases Tracking Risk</h2>
+<div class="container">
 
-    <table border="1" width="100%">
+	<div class="welcome-msg">WELCOME, USER</div>
+
+    <div class="section-header">To-Do</div>
+
+    <table class="data-table">
         <tr>
             <th>Task</th>
-            <th>Person</th>
+            <th>Project</th>
             <th>Status</th>
-            <th>Deadlinesss</th>
+            <th>Deadlines</th>
             <th>Notes</th>
         </tr>
         <tr>
            
         </tr>
     </table>
+	
+	<div class="section-header">Projects</div>
+	
+	<table class="data-table">
+        <tr>
+            <th>Project</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Manager</th>
+        </tr>
+        <tr>
+           
+        </tr>
+    </table>
+	
+	<div class="section-header">Notifications</div>
+	
+	<table class="data-table">
+        <tr>
+            <th>Project</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th>Manager</th>
+        </tr>
+        <tr>
+           
+        </tr>
+    </table>
+	
 </body>
 </html>

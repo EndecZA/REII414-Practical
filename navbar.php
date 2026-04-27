@@ -1,14 +1,9 @@
-<table width="100%" border="0">
-    <tr>
-        <td valign="middle"> <img src="logo.jpeg" alt="Ahoy Logo" width="50" align="middle">&nbsp; |&nbsp; <a href="index.php">Home</a>&nbsp;
-            |&nbsp; 
-            <a href="projects.php">Projects</a>&nbsp;
-            |&nbsp;
-            <a href="notifications.php">Notifications</a>
-        </td>
-        
-        <td align="right" valign="middle"> Good evening: User
-        </td>
-    </tr>
+<nav class="navbar">
+	<img src="logo.jpeg" class="navbar-logo">
+    <div class="navbar-links">
+		<a href="index.php">HOME</a>
+		<a href="projects.php">PROJECTS</a>
+	
+	</div>
 </table>
-<hr>
+</nav>

@@ -9,7 +9,7 @@
 
 
 
-<body>
+<body class = "login-body">
     <div class="login-container">
         <form class="login-form">
 		<img src="logo.jpeg" alt="Ahoy Logo" class="login-logo">

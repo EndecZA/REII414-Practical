@@ -1,21 +1,19 @@
+/* --- GLOBAL STYLES (Applies to ALL pages) --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff; /* White background for dashboard */
+}
 
-    background-color: #7EB2DD; 
-
+/* --- LOGIN SPECIFIC STYLES (Applies ONLY to Login) --- */
+.login-body {
+    background-color: #7EB2DD; /* Blue background for login */
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-}
-
-.login-logo {
-    display: block;      /* Allows us to use margin: auto to center it */
-    margin: 0 auto;      /* Centers the image horizontally */
-    width: 300px;        /* Adjust this number to change the size */
-    height: auto;        /* Maintains the original proportions */
-    margin-bottom: 1px; /* Adds space between the logo and the text */
 }
 
 .login-container {
@@ -27,18 +25,17 @@ body {
     max-width: 400px;
 }
 
-.signup-container {
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+.login-logo {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    height: auto;
+    margin-bottom: 1px;
 }
 
+/* --- FORM & INPUT STYLES (Used on Login and potentially others) --- */
 h2 {
-	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 2.5rem;
+    font-size: 2.5rem;
     text-align: center;
     color: #333;
     margin-bottom: 0.5rem;
@@ -51,7 +48,9 @@ h2 {
 .input-group label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #666;
+    color: #253d6a; /* Navy Blue */
+    font-size: 1.2rem;
+    text-align: center;
 }
 
 .input-group input {
@@ -59,11 +58,10 @@ h2 {
     padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    box-sizing: border-box;
 }
 
 .login-btn {
-
     width: 100%;
     padding: 0.75rem;
     border: none;
@@ -87,13 +85,82 @@ h2 {
 }
 
 label {
-    font-family: 'Segoe UI', sans-serif; /* You can change this to any font you've linked */
+    font-family: 'Segoe UI', sans-serif;
                 /* Makes the labels stand out */
-    color: #253d6a;                   /* Using that Navy Blue from your logo */
+    color: #253d6a;                   /*  Navy Blue from logo */
     font-size: 1.2rem;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
 
+.container { padding: 20px; }
 
+.welcome-msg {
+    text-align: center;
+    color: #7CA9D6; /* Light Blue */
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 30px 0;
+    font-family: Arial, sans-serif;
+}
+
+.section-header {
+    background-color: #FCECC9;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+.data-table th {
+    color: #F93943;
+    text-align: left;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.data-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.navbar {
+	background-color: #445E93;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.navbar-logo {
+    height: 40px; 
+    margin-right: 20px; 
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px; 
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
