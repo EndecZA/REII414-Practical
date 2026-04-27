@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahoy! Welcome Aboard</title>
+	<link rel="icon" type="image/jpeg" href="logo.jpeg">
     <link rel="stylesheet" href="style.css">
     <meta http-equiv="refresh" content="10;url=login.php">
 </head>
