@@ -16,8 +16,8 @@
 			<div class="project-select">
 				<label><strong>PROJECT:</strong></label>
 				<select>
-					<option>Space X</option>
-					<option>Mars Colony</option>
+					<option>Option 1</option>
+					<option>Option 2</option>
 				</select>
 			</div>
 			
