@@ -17,11 +17,6 @@
                 <label for="fullname">Full Name</label>
                 <input type="text" id="fullname" name="fullname" required>
             </div>
-			
-			<div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
 
             <div class="input-group">
                 <label for="email">Email Address</label>
