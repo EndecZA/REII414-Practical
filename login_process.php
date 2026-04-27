@@ -24,7 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: index.php");
             exit();
         } else {
-            echo "Invalid password. <a href='login.php'>Try again</a>";
+			header("Location: login.php");
+            //echo "Invalid password. <a href='login.php'>Try again</a>";
         }
     } else {
         echo "No account found with that email. <a href='sign_up.php'>Sign up here</a>";

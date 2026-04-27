@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body class = "login-body">
 
     <div class="login-container">
@@ -25,6 +24,7 @@
             </div>
 
             <button type="submit" class="login-btn">Login</button>
+			
             <p class="signup-link">Don't have an account? <a href="sign_up.php">Sign up</a></p>
         </form>
     </div>
