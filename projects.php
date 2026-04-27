@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'phases';
 ?>
 
@@ -33,7 +34,21 @@
         </div>
 
         <div class="content-box">
-            <p><?php echo $current_tab; ?></p>
+           <?php if ($current_tab == 'settings'): ?>
+            <h3>Project Settings</h3>
+            
+            <?php 
+            if (isset($_SESSION['user_title']) && ($_SESSION['user_title'] == 'Manager' || $_SESSION['user_title'] == 'Admin')) {
+                echo '<div style="margin-bottom: 20px;">
+                        <a href="manage_projects.php"><button>+ Add New Project</button></a>
+                        <a href="add_phases.php" style="margin-left: 10px;"><button>+ Add Phases</button></a>
+                      </div>';
+            }
+            ?>
+            <?php else: ?>
+                <p>Viewing: <?php echo strtoupper($current_tab); ?></p>
+            <?php endif; ?>
         </div>
+    </div>
 </body>
 </html>

@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_name'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +17,7 @@
 
 <div class="container">
 
-	<div class="welcome-msg">WELCOME, USER</div>
+	<div class="welcome-msg">WELCOME, <?php echo strtoupper(htmlspecialchars($_SESSION['user_name'])); ?></div>
 
     <div class="section-header">To-Do</div>
 
