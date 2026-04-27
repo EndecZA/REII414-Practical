@@ -164,3 +164,45 @@ label {
 .navbar-links a:hover {
     text-decoration: underline;
 }
+
+.project-info-bar {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex; 
+    align-items: center;
+}
+
+.manager-display {
+    margin-left: 50px;
+    font-size: 1rem;
+}
+
+.tab-container {
+    display: flex;
+    margin: 20px 20px 0 20px;
+}
+
+.tab {
+    padding: 10px 30px;
+    background-color: #FCECC9; 
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s;
+}
+
+.tab.active {
+    background-color: #F93943; 
+    color: white;
+}
+
+.content-box {
+    margin: 0 20px;
+    padding: 40px;
+    border: 1px solid #ccc;
+    min-height: 300px;
+    background-color: #fff;
+}
