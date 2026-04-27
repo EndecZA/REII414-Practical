@@ -6,7 +6,10 @@
     <title>Ahoy! Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+
+
+<body class = "login-body">
+
     <div class="login-container">
         <form class="login-form" action="login_process.php" method="POST">
             <img src="logo.jpeg" alt="Ahoy Logo" class="login-logo">
