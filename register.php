@@ -19,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $hashed_pass, $title);
 
     if (mysqli_stmt_execute($stmt)) {
-        echo "<h1>Welcome aboard!</h1>";
-        echo "<p>User created successfully. <a href='index.html'>Click here to Login</a></p>";
+		header("Location: transitionpage.php");
+        exit();
     } else {
         echo "Error: " . mysqli_error($conn);
     }

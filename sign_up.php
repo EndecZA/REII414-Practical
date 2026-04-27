@@ -10,7 +10,7 @@
 <body class="signup-page">
     <div class="signup-container">
         
-        <h2>Join the Crew</h2>
+        <h2>Join the Crew!</h2>
         
         <form action="register.php" method="POST">
             <div class="input-group">
