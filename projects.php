@@ -3,6 +3,7 @@
 	include 'db.php';
     $current_tab = isset($_GET['tab']) ? $_GET['tab'] : 'phases';
 	$selected_project_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0;
 ?>
 
 <!DOCTYPE html>
@@ -86,8 +87,56 @@
 				</table>
 				<br>
 
-			<?php else: ?>
-				<p>Viewing: <?php echo strtoupper($current_tab); ?></p>
+			<?php elseif ($current_tab == 'phases'): ?>
+				<h3>Phases & Tasks</h3>
+				
+				<form method="GET" action="projects.php">
+					<input type="hidden" name="id" value="<?php echo $selected_project_id; ?>">
+					<input type="hidden" name="tab" value="phases">
+					<select name="phase_filter" onchange="this.form.submit()">
+						<option value="0">All Phases</option>
+						<?php 
+						$f_res = mysqli_query($conn, "SELECT id, name FROM phases WHERE project_id = $selected_project_id");
+						while($f = mysqli_fetch_assoc($f_res)) {
+							$sel = ($phase_filter == $f['id']) ? 'selected' : '';
+							echo "<option value='{$f['id']}' $sel>{$f['name']}</option>";
+						}
+						?>
+					</select>
+				</form>
+
+				<?php
+				$p_sql = ($phase_filter > 0) ? "SELECT * FROM phases WHERE id = $phase_filter" : "SELECT * FROM phases WHERE project_id = $selected_project_id";
+				$phases = mysqli_query($conn, $p_sql);
+				
+				while($phase = mysqli_fetch_assoc($phases)): ?>
+					<div style="border:1px solid #ccc; margin-top:20px; padding:10px;">
+						<h4>Phase: <?php echo $phase['name']; ?></h4>
+						<table border="1" width="100%">
+							<tr><th>Task</th><th>Status</th><th>Deadline</th><th>Notes</th><th>File</th></tr>
+							<?php
+							$tasks = mysqli_query($conn, "SELECT * FROM tasks WHERE phase_id = {$phase['id']}");
+							while($t = mysqli_fetch_assoc($tasks)) {
+								echo "<tr><td>{$t['title']}</td><td>{$t['status']}</td><td>{$t['deadline']}</td><td>{$t['notes']}</td>
+									  <td><a href='{$t['file_path']}'>Download</a></td></tr>";
+							}
+							?>
+						</table>
+
+					<h5>Add New Task</h5>
+						<form action="process_task.php" method="POST" enctype="multipart/form-data">
+							<input type="hidden" name="phase_id" value="<?php echo $phase['id']; ?>">
+							<input type="hidden" name="project_id" value="<?php echo $selected_project_id; ?>">
+							
+							<input type="text" name="title" placeholder="Task Title" required>
+							
+							<input type="date" name="deadline">
+							<input type="text" name="notes" placeholder="Notes">
+							<input type="file" name="task_file">
+							<button type="submit">Add Task</button>
+						</form>
+					</div>
+				<?php endwhile; ?>
 			<?php endif; ?>
 		</div>
     </div>
