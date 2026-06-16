@@ -10,7 +10,7 @@ $phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
-    <title>Projects</title>
+    <title>Ahoy! Projects</title>
 </head>
 
 <body>
@@ -39,11 +39,24 @@ $phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0
             </div>
         </div>
 
-        <div class="tab-container">
-            <a href="?tab=phases" class="tab <?php echo ($current_tab == 'phases') ? 'active' : ''; ?>">PHASES</a>
-            <a href="?tab=risk" class="tab <?php echo ($current_tab == 'risk') ? 'active' : ''; ?>">RISK MANAGEMENT</a>
-            <a href="?tab=settings" class="tab <?php echo ($current_tab == 'settings') ? 'active' : ''; ?>">SETTINGS</a>
-        </div>
+<div class="tab-container">
+
+<a href="?tab=phases&id=<?php echo $selected_project_id; ?>"
+class="tab <?php echo ($current_tab == 'phases') ? 'active' : ''; ?>">
+PHASES
+</a>
+
+<a href="?tab=risk&id=<?php echo $selected_project_id; ?>"
+class="tab <?php echo ($current_tab == 'risk') ? 'active' : ''; ?>">
+RISK MANAGEMENT
+</a>
+
+<a href="?tab=settings&id=<?php echo $selected_project_id; ?>"
+class="tab <?php echo ($current_tab == 'settings') ? 'active' : ''; ?>">
+SETTINGS
+</a>
+
+</div>
 
       <div class="content-box">
 		   <?php if ($current_tab == 'settings'): ?>
@@ -87,7 +100,133 @@ $phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0
 				</table>
 				<br>
 
-			<?php elseif ($current_tab == 'phases'): ?>
+			<?php elseif ($current_tab == 'risk'): ?>
+
+<div class="risk-container">
+
+<div class="risk-button-container">   <!-- ← add this wrapper -->
+        <a href="projects.php?tab=create_risk&id=<?php echo $selected_project_id; ?>"
+           class="risk-btn">
+            Create New Risk
+        </a>
+    </div>
+	
+	 <br style="clear:both;"> 
+
+    <table class="risk-table">
+
+        <tr>
+            <th>Risk No.</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Probability</th>
+            <th>Impact</th>
+            <th>Score</th>
+        </tr>
+
+        <?php
+
+        $query =
+        "SELECT * FROM risks WHERE project_id=?";
+
+        $stmt =
+        mysqli_prepare(
+            $conn,
+            $query
+        );
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            "i",
+            $selected_project_id
+        );
+
+        mysqli_stmt_execute($stmt);
+
+        $result =
+        mysqli_stmt_get_result($stmt);
+
+        while($r =
+            mysqli_fetch_assoc($result)) {
+
+            $score =
+            $r['probability']
+            *
+            $r['impact'];
+
+            echo "
+
+            <tr>
+
+            <td>{$r['id']}</td>
+
+            <td>{$r['description']}</td>
+
+            <td>{$r['category']}</td>
+
+            <td>{$r['probability']}</td>
+
+            <td>{$r['impact']}</td>
+
+            <td>$score</td>
+
+            </tr>";
+        }
+
+        ?>
+
+    </table>
+
+</div>
+
+			<br>
+
+<?php elseif ($current_tab == 'create_risk'): ?>
+
+<h3>Create New Risk</h3>
+
+<div class="risk-container">
+
+<form action="process_risk.php" method="POST">
+
+<input
+type="hidden"
+name="project_id"
+value="<?php echo $selected_project_id; ?>">
+
+<label>Description</label><br>
+<input type="text"
+       name="description"
+       required><br><br>
+
+<label>Category</label><br>
+<input type="text"
+       name="category"
+       required><br><br>
+
+<label>Probability</label><br>
+<input type="number"
+       name="probability"
+       min="1"
+       max="5"
+       required><br><br>
+
+<label>Impact</label><br>
+<input type="number"
+       name="impact"
+       min="1"
+       max="5"
+       required><br><br>
+
+<button type="submit" class="risk-btn">
+Save Risk
+</button>
+
+</form>
+
+</div>
+
+			<?php elseif($current_tab == 'phases'): ?>
 				<h3>Phases & Tasks</h3>
 				
 				<form method="GET" action="projects.php">
