@@ -53,7 +53,6 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
 </head>
 <body>
 <?php include 'navbar.php'; ?>
-<?php include 'clear_notification.php'; ?>
 
 <div class="container">
 
