@@ -10,6 +10,7 @@ $phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0
 <html>
 <head>
     <link rel="stylesheet" href="style.css">
+	<link rel="icon" type="image/jpeg" href="logo.jpeg">
     <title>Ahoy! Projects</title>
 </head>
 
@@ -122,6 +123,8 @@ SETTINGS
             <th>Probability</th>
             <th>Impact</th>
             <th>Score</th>
+			<th>Edit</th>     
+			<th>Delete</th> 
         </tr>
 
         <?php
@@ -170,7 +173,10 @@ SETTINGS
 
             <td>$score</td>
 
-            </tr>";
+            <td><a href='edit_risk.php?id={$r['id']}&project_id={$selected_project_id}' class='risk-btn'>Edit</a></td>
+			<td><a href='delete_risk.php?id={$r['id']}&project_id={$selected_project_id}' class='risk-btn' onclick='return confirm(\"Are you sure?\")'>Delete</a></td>
+			
+			</tr>";
         }
 
         ?>
@@ -200,9 +206,18 @@ value="<?php echo $selected_project_id; ?>">
        required><br><br>
 
 <label>Category</label><br>
-<input type="text"
-       name="category"
-       required><br><br>
+<select name="category" required>
+    <option value="">-- Select Category --</option>
+    <option value="G">Group</option>
+    <option value="I">Individual</option>
+    <option value="S">Schedule</option>
+    <option value="K">Knowledge</option>
+    <option value="T">Technical</option>
+    <option value="F">Financial</option>
+    <option value="O">Operational</option>
+    <option value="L">Legal</option>
+    <option value="E">Environmental</option>
+</select><br><br>
 
 <label>Probability</label><br>
 <input type="number"
