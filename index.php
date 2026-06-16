@@ -24,7 +24,8 @@ if ($u_title === 'Manager' || $u_title === 'Admin') {
                              FROM tasks t
                              JOIN phases ph ON t.phase_id = ph.id
                              JOIN projects p ON ph.project_id = p.id
-                             WHERE t.assigned_user_id = ? AND t.deadline <= DATE_ADD(NOW(), INTERVAL 1 DAY) AND t.deadline >= NOW()";
+                             JOIN project_assignments pa ON p.id = pa.project_id
+                             WHERE pa.user_id = ? AND t.deadline <= DATE_ADD(NOW(), INTERVAL 1 DAY) AND t.deadline >= NOW()";
 }
 
 $dl_stmt = mysqli_prepare($conn, $check_deadline_query);
@@ -76,13 +77,14 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
                            JOIN phases ph ON t.phase_id = ph.id
                            JOIN projects p ON ph.project_id = p.id
                            WHERE p.manager_id = ? AND t.status != 'completed'";
-        } else {
-            $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.tags
-                           FROM tasks t
-                           JOIN phases ph ON t.phase_id = ph.id
-                           JOIN projects p ON ph.project_id = p.id
-                           WHERE t.assigned_user_id = ? AND t.status != 'completed'";
-        }
+} else {
+    $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.tags
+                   FROM tasks t
+                   JOIN phases ph ON t.phase_id = ph.id
+                   JOIN projects p ON ph.project_id = p.id
+                   JOIN project_assignments pa ON p.id = pa.project_id
+                   WHERE pa.user_id = ? AND t.status != 'completed'";
+}
 
         $t_stmt = mysqli_prepare($conn, $task_query);
         mysqli_stmt_bind_param($t_stmt, "i", $u_id);
