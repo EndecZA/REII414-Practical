@@ -34,13 +34,17 @@ $dl_res = mysqli_stmt_get_result($dl_stmt);
 
 while ($dl_row = mysqli_fetch_assoc($dl_res)) {
     $msg = "Urgent: A task on project '" . $dl_row['project_name'] . "' is due within 24 hours.";
+    $t_id = intval($dl_row['task_id']); 
+	
     
-    // Check if this specific deadline warning message was already generated to avoid duplication
-    $dup_check = mysqli_query($conn, "SELECT id FROM notifications WHERE user_id = $u_id AND message = '" . mysqli_real_escape_string($conn, $msg) . "'");
+    $dup_check = mysqli_query($conn, "SELECT id FROM notifications WHERE user_id = $u_id AND task_id = $t_id");
+    
     if (mysqli_num_rows($dup_check) == 0) {
-        $ins_notif = mysqli_prepare($conn, "INSERT INTO notifications (user_id, project_id, message, type) VALUES (?, ?, ?, 'deadline')");
-        mysqli_stmt_bind_param($ins_notif, "iis", $u_id, $dl_row['project_id'], $msg);
-        mysqli_stmt_execute($ins_notif);
+        if (!isset($_SESSION['cleared_tasks']) || !in_array($t_id, $_SESSION['cleared_tasks'])) {
+            $ins_notif = mysqli_prepare($conn, "INSERT INTO notifications (user_id, project_id, task_id, message, type) VALUES (?, ?, ?, ?, 'deadline')");
+            mysqli_stmt_bind_param($ins_notif, "iiis", $u_id, $dl_row['project_id'], $t_id, $msg);
+            mysqli_stmt_execute($ins_notif);
+        }
     }
 }
 
@@ -69,7 +73,6 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
             <th>Tags</th>
         </tr>
         <?php
-        // Filter out 'completed' status so they disappear from the dashboard
         if ($u_title === 'Manager' || $u_title === 'Admin') {
             $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.tags
                            FROM tasks t
