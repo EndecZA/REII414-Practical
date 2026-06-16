@@ -35,8 +35,8 @@ $phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0
             </form>
             </div>
 
-            <div class="manager-display">
-    <strong>MANAGER:</strong>
+<div class="manager-display">
+    <label><strong>MANAGER:</strong></label>
     <?php
     if ($selected_project_id > 0) {
         $mgr_stmt = mysqli_prepare($conn, "SELECT u.fullname FROM users u 
@@ -46,9 +46,9 @@ $phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0
         mysqli_stmt_execute($mgr_stmt);
         $mgr_result = mysqli_stmt_get_result($mgr_stmt);
         $mgr_row = mysqli_fetch_assoc($mgr_result);
-        echo $mgr_row ? htmlspecialchars($mgr_row['fullname']) : 'No manager assigned';
+        echo '<span style="font-size: 1rem;">' . ($mgr_row ? htmlspecialchars($mgr_row['fullname']) : 'No manager assigned') . '</span>';
     } else {
-        echo 'Select a project';
+        echo '<span style="font-size: 1rem;">Select a project</span>';
     }
     ?>
 </div>

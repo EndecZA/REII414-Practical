@@ -61,7 +61,7 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
 	<div class="welcome-msg">WELCOME, <?php echo strtoupper(htmlspecialchars($_SESSION['user_name'])); ?></div>
 
 <div class="section-header">To-Do</div>
-    <table class="data-table" border="1" width="100%">
+    <table class="data-table todo-table" border="1" width="100%">
         <tr>
             <th>Task</th>
             <th>Project</th>
@@ -135,7 +135,7 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
 	
 	<div class="section-header">Projects</div>
 	
-	<table class="data-table">
+	<table class="data-table projects-table">
         <tr>
             <th>Project</th>
             <th>Deadline</th>
@@ -182,7 +182,7 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
 	
 	<div class="section-header">Notifications</div>
     
-    <table class="data-table" border="1" width="100%">
+    <table class="data-table notifications-table" border="1" width="100%">
         <tr>
             <th>Alert Message</th>
             <th>Project View Link</th>
