@@ -88,13 +88,18 @@ SETTINGS
 
 				<h3>Project Team</h3>
 				<table border="1">
-					<tr><th>Assigned Employee Name</th></tr>
+					<tr>
+						<th>Assigned Employee Name</th>
+						<?php if (isset($_SESSION['user_title']) && ($_SESSION['user_title'] == 'Manager' || $_SESSION['user_title'] == 'Admin')): ?>
+							<th>Action</th>
+						<?php endif; ?>
+					</tr>
 					<?php
-					// Make sure $selected_project_id is defined
 					$selected_project_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 					
 					if ($selected_project_id > 0) {
-						$query = "SELECT u.fullname 
+						// CHANGED: Query selects u.id (the user's ID) instead of a non-existent pa.id
+						$query = "SELECT u.id AS user_id, u.fullname 
 								  FROM users u 
 								  JOIN project_assignments pa ON u.id = pa.user_id 
 								  WHERE pa.project_id = ?";
@@ -104,11 +109,27 @@ SETTINGS
 						mysqli_stmt_execute($stmt);
 						$result = mysqli_stmt_get_result($stmt);
 						
-						while($row = mysqli_fetch_assoc($result)) {
-							echo "<tr><td>" . htmlspecialchars($row['fullname']) . "</td></tr>";
+						if (mysqli_num_rows($result) > 0) {
+							while($row = mysqli_fetch_assoc($result)) {
+								echo "<tr>";
+								echo "<td>" . htmlspecialchars($row['fullname']) . "</td>";
+								
+								if (isset($_SESSION['user_title']) && ($_SESSION['user_title'] == 'Manager' || $_SESSION['user_title'] == 'Admin')) {
+									// CHANGED: We now pass user_id instead of assignment_id in the URL parameters
+									echo "<td>
+											<a href='remove_from_project.php?user_id={$row['user_id']}&project_id={$selected_project_id}' 
+											   onclick='return confirm(\"Are you sure you want to remove this employee from the project?\")'>
+											   <button style='color:red;'>X Remove</button>
+											</a>
+										  </td>";
+								}
+								echo "</tr>";
+							}
+						} else {
+							echo "<tr><td colspan='2' align='center'>No employees assigned to this project yet.</td></tr>";
 						}
 					} else {
-						echo "<tr><td>Please select a project to view the team.</td></tr>";
+						echo "<tr><td colspan='2'>Please select a project to view the team.</td></tr>";
 					}
 					?>
 				</table>
