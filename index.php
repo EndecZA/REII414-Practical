@@ -13,14 +13,14 @@ $u_title = $_SESSION['user_title'];
 // Query tasks reaching their deadline within 1 day
 if ($u_title === 'Manager' || $u_title === 'Admin') {
     // Managers get alerted on tasks within projects they oversee
-    $check_deadline_query = "SELECT t.id AS task_id, p.id AS project_id, p.name AS project_name, t.notes 
+    $check_deadline_query = "SELECT t.id AS task_id, p.id AS project_id, p.name AS project_name, t.tags 
                              FROM tasks t
                              JOIN phases ph ON t.phase_id = ph.id
                              JOIN projects p ON ph.project_id = p.id
                              WHERE p.manager_id = ? AND t.deadline <= DATE_ADD(NOW(), INTERVAL 1 DAY) AND t.deadline >= NOW()";
 } else {
     // Employees get alerted on their own assigned tasks
-    $check_deadline_query = "SELECT t.id AS task_id, p.id AS project_id, p.name AS project_name, t.notes 
+    $check_deadline_query = "SELECT t.id AS task_id, p.id AS project_id, p.name AS project_name, t.tags 
                              FROM tasks t
                              JOIN phases ph ON t.phase_id = ph.id
                              JOIN projects p ON ph.project_id = p.id
@@ -66,18 +66,18 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
             <th>Project</th>
             <th>Status</th>
             <th>Deadlines</th>
-            <th>Notes</th>
+            <th>Tags</th>
         </tr>
         <?php
         // Filter out 'completed' status so they disappear from the dashboard
         if ($u_title === 'Manager' || $u_title === 'Admin') {
-            $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.notes
+            $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.tags
                            FROM tasks t
                            JOIN phases ph ON t.phase_id = ph.id
                            JOIN projects p ON ph.project_id = p.id
                            WHERE p.manager_id = ? AND t.status != 'completed'";
         } else {
-            $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.notes
+            $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.tags
                            FROM tasks t
                            JOIN phases ph ON t.phase_id = ph.id
                            JOIN projects p ON ph.project_id = p.id
@@ -92,7 +92,7 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
         if (mysqli_num_rows($t_result) > 0) {
             while ($task_row = mysqli_fetch_assoc($t_result)) {
                 $task_deadline = !empty($task_row['deadline']) ? $task_row['deadline'] : 'No deadline';
-                $task_notes = !empty($task_row['notes']) ? htmlspecialchars($task_row['notes']) : '-';
+                $task_tags = !empty($task_row['tags']) ? htmlspecialchars($task_row['tags']) : '-';
                 
                 // Track dropdown selections
                 $s_not_started = ($task_row['status'] == 'not started') ? 'selected' : '';
@@ -116,7 +116,7 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
                         </td>
                         
                         <td>" . htmlspecialchars($task_deadline) . "</td>
-                        <td>" . $task_notes . "</td>
+                        <td>" . $task_tags . "</td>
                       </tr>";
             }
         } else {

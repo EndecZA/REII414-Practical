@@ -267,7 +267,7 @@ Save Risk
 					<div style="border:1px solid #ccc; margin-top:20px; padding:10px;">
 						<h4>Phase: <?php echo $phase['name']; ?></h4>
 						<table border="1" width="100%">
-							<tr><th>Task</th><th>Status</th><th>Deadline</th><th>Notes</th><th>File</th></tr>
+							<tr><th>Task</th><th>Status</th><th>Deadline</th><th>Tags</th><th>File</th></tr>
 							<?php
 							$tasks = mysqli_query($conn, "SELECT * FROM tasks WHERE phase_id = {$phase['id']}");
 							while($t = mysqli_fetch_assoc($tasks)) {
@@ -289,7 +289,7 @@ Save Risk
 											</form>
 										</td>
 										<td>{$t['deadline']}</td>
-										<td>" . htmlspecialchars($t['notes']) . "</td>
+										<td>" . htmlspecialchars($t['tags']) . "</td>
 										<td><a href='{$t['file_path']}'>Download</a></td>
 									  </tr>";
 							}
@@ -304,7 +304,7 @@ Save Risk
 							<input type="text" name="title" placeholder="Task Title" required>
 							
 							<input type="date" name="deadline">
-							<input type="text" name="notes" placeholder="Notes">
+							<input type="text" name="tags" placeholder="Tags">
 							<input type="file" name="task_file">
 							<button type="submit">Add Task</button>
 						</form>

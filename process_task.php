@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $project_id = $_POST['project_id'];
     $title = $_POST['title'];       
     $deadline = $_POST['deadline'];
-    $notes = $_POST['notes'];
+    $tags = $_POST['tags'];
     
     // File Upload Logic
     $target_file = "";
@@ -19,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     
-    $stmt = mysqli_prepare($conn, "INSERT INTO tasks (phase_id, title, deadline, notes, file_path) VALUES (?, ?, ?, ?, ?)");
+    $stmt = mysqli_prepare($conn, "INSERT INTO tasks (phase_id, title, deadline, tags, file_path) VALUES (?, ?, ?, ?, ?)");
     
     
-    mysqli_stmt_bind_param($stmt, "issss", $phase_id, $title, $deadline, $notes, $target_file);
+    mysqli_stmt_bind_param($stmt, "issss", $phase_id, $title, $deadline, $tags, $target_file);
     
     if (mysqli_stmt_execute($stmt)) {
         header("Location: projects.php?id=$project_id&tab=phases");
