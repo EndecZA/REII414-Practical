@@ -36,10 +36,23 @@ $phase_filter = isset($_GET['phase_filter']) ? intval($_GET['phase_filter']) : 0
             </div>
 
             <div class="manager-display">
-                <strong>MANAGER:</strong> (DISP MANA)
-            </div>
-        </div>
-
+    <strong>MANAGER:</strong>
+    <?php
+    if ($selected_project_id > 0) {
+        $mgr_stmt = mysqli_prepare($conn, "SELECT u.fullname FROM users u 
+                                           JOIN projects p ON u.id = p.manager_id 
+                                           WHERE p.id = ?");
+        mysqli_stmt_bind_param($mgr_stmt, "i", $selected_project_id);
+        mysqli_stmt_execute($mgr_stmt);
+        $mgr_result = mysqli_stmt_get_result($mgr_stmt);
+        $mgr_row = mysqli_fetch_assoc($mgr_result);
+        echo $mgr_row ? htmlspecialchars($mgr_row['fullname']) : 'No manager assigned';
+    } else {
+        echo 'Select a project';
+    }
+    ?>
+</div>
+</div>
 <div class="tab-container">
 
 <a href="?tab=phases&id=<?php echo $selected_project_id; ?>"
