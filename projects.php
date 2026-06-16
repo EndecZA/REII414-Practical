@@ -67,7 +67,7 @@ SETTINGS
 				if (isset($_SESSION['user_title']) && ($_SESSION['user_title'] == 'Manager' || $_SESSION['user_title'] == 'Admin')) {
 					echo '<div style="margin-bottom: 20px;">
 							<a href="manage_projects.php"><button>+ Add New Project</button></a>
-							<a href="add_phases.php" style="margin-left: 10px;"><button>+ Add Phases</button></a>
+							<a href="add_phases.php?id=<?php echo $selected_project_id; ?>" style="margin-left: 10px;"><button>+ Add Phases</button></a>
 							<a href="assign_employee.php" style="margin-left: 10px;"><button>+ Assign Employee</button></a>
 						  </div>';
 				}
