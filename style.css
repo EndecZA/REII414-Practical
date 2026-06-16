@@ -19,7 +19,7 @@ body {
 
 .risk-table{
 
-    width: 100%;
+    width: 75%;
 
     border-collapse: collapse;
 
@@ -34,6 +34,35 @@ body {
     box-shadow:
         0 2px 8px
         rgba(0,0,0,0.08);
+}
+
+.risk-table td:last-child,
+.risk-table th:last-child,
+.risk-table td:nth-last-child(2),
+.risk-table th:nth-last-child(2) {
+    width: 60px;
+    text-align: center;
+}
+
+.navbar-right {
+    margin-left: auto;  /* ← pushes it to the far right */
+}
+
+.logout-btn {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: Arial, sans-serif;
+    padding: 6px 14px;
+    border: 2px solid white;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #F93943;
+    border-color: #F93943;
 }
 
 .risk-table th{
