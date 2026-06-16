@@ -256,10 +256,29 @@ Save Risk
 							<?php
 							$tasks = mysqli_query($conn, "SELECT * FROM tasks WHERE phase_id = {$phase['id']}");
 							while($t = mysqli_fetch_assoc($tasks)) {
-								echo "<tr><td>{$t['title']}</td><td>{$t['status']}</td><td>{$t['deadline']}</td><td>{$t['notes']}</td>
-									  <td><a href='{$t['file_path']}'>Download</a></td></tr>";
+								$s_not_started = ($t['status'] == 'not started') ? 'selected' : '';
+								$s_busy        = ($t['status'] == 'busy') ? 'selected' : '';
+								$s_completed   = ($t['status'] == 'completed') ? 'selected' : '';
+
+								echo "<tr>
+										<td>" . htmlspecialchars($t['title']) . "</td>
+										<td>
+											<form method=\"POST\" action=\"update_task_status.php\">
+												<input type=\"hidden\" name=\"task_id\" value=\"{$t['id']}\">
+												<input type=\"hidden\" name=\"redirect_to\" value=\"projects.php?id=$selected_project_id&tab=phases\">
+												<select name=\"status\" onchange=\"this.form.submit()\">
+													<option value=\"not started\" $s_not_started>Not Started</option>
+													<option value=\"busy\" $s_busy>Busy</option>
+													<option value=\"completed\" $s_completed>Completed</option>
+												</select>
+											</form>
+										</td>
+										<td>{$t['deadline']}</td>
+										<td>" . htmlspecialchars($t['notes']) . "</td>
+										<td><a href='{$t['file_path']}'>Download</a></td>
+									  </tr>";
 							}
-							?>
+														?>
 						</table>
 
 					<h5>Add New Task</h5>

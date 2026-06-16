@@ -58,9 +58,8 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
 
 	<div class="welcome-msg">WELCOME, <?php echo strtoupper(htmlspecialchars($_SESSION['user_name'])); ?></div>
 
-    <div class="section-header">To-Do</div>
-
-    <table class="data-table">
+<div class="section-header">To-Do</div>
+    <table class="data-table" border="1" width="100%">
         <tr>
             <th>Task</th>
             <th>Project</th>
@@ -69,49 +68,58 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
             <th>Notes</th>
         </tr>
         <?php
-        $user_id = intval($_SESSION['user_id']);
-        $user_title = $_SESSION['user_title'];
-
-        // Determine the query based on whether the logged-in user is a Manager or an Employee
-        if ($user_title === 'Manager' || $user_title === 'Admin') {
-            // Managers see all tasks across the projects they have created
-            $task_query = "SELECT t.title AS task_name, p.id AS project_id, p.name AS project_name, 
-                                  t.status, t.deadline, t.notes
+        // Filter out 'completed' status so they disappear from the dashboard
+        if ($u_title === 'Manager' || $u_title === 'Admin') {
+            $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.notes
                            FROM tasks t
                            JOIN phases ph ON t.phase_id = ph.id
                            JOIN projects p ON ph.project_id = p.id
-                           WHERE p.manager_id = ?";
+                           WHERE p.manager_id = ? AND t.status != 'completed'";
         } else {
-            // Employees see only tasks where they are specifically assigned
-            $task_query = "SELECT t.title AS task_name, p.id AS project_id, p.name AS project_name, 
-                                  t.status, t.deadline, t.notes
+            $task_query = "SELECT t.id AS task_id, t.title AS task_name, p.id AS project_id, p.name AS project_name, t.status, t.deadline, t.notes
                            FROM tasks t
                            JOIN phases ph ON t.phase_id = ph.id
                            JOIN projects p ON ph.project_id = p.id
-                           WHERE t.assigned_user_id = ?";
+                           WHERE t.assigned_user_id = ? AND t.status != 'completed'";
         }
 
         $t_stmt = mysqli_prepare($conn, $task_query);
-        mysqli_stmt_bind_param($t_stmt, "i", $user_id);
+        mysqli_stmt_bind_param($t_stmt, "i", $u_id);
         mysqli_stmt_execute($t_stmt);
         $t_result = mysqli_stmt_get_result($t_stmt);
 
         if (mysqli_num_rows($t_result) > 0) {
             while ($task_row = mysqli_fetch_assoc($t_result)) {
-                // Determine a fallback if deadline or notes are empty
                 $task_deadline = !empty($task_row['deadline']) ? $task_row['deadline'] : 'No deadline';
                 $task_notes = !empty($task_row['notes']) ? htmlspecialchars($task_row['notes']) : '-';
                 
+                // Track dropdown selections
+                $s_not_started = ($task_row['status'] == 'not started') ? 'selected' : '';
+                $s_busy        = ($task_row['status'] == 'busy') ? 'selected' : '';
+                $s_completed   = ($task_row['status'] == 'completed') ? 'selected' : '';
+
                 echo "<tr>
                         <td>" . htmlspecialchars($task_row['task_name']) . "</td>
                         <td><a href='projects.php?id={$task_row['project_id']}&tab=phases'>" . htmlspecialchars($task_row['project_name']) . "</a></td>
-                        <td>" . htmlspecialchars($task_row['status']) . "</td>
+                        
+                        <td>
+                            <form method=\"POST\" action=\"update_task_status.php\">
+                                <input type=\"hidden\" name=\"task_id\" value=\"{$task_row['task_id']}\">
+                                <input type=\"hidden\" name=\"redirect_to\" value=\"index.php\">
+                                <select name=\"status\" onchange=\"this.form.submit()\">
+                                    <option value=\"not started\" $s_not_started>Not Started</option>
+                                    <option value=\"busy\" $s_busy>Busy</option>
+                                    <option value=\"completed\" $s_completed>Completed</option>
+                                </select>
+                            </form>
+                        </td>
+                        
                         <td>" . htmlspecialchars($task_deadline) . "</td>
                         <td>" . $task_notes . "</td>
                       </tr>";
             }
         } else {
-            echo "<tr><td colspan='5' align='center'>No tasks found.</td></tr>";
+            echo "<tr><td colspan='5' align='center'>No pending tasks found.</td></tr>";
         }
         ?>
     </table>
