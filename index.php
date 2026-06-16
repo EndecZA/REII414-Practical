@@ -109,11 +109,17 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
                             <form method=\"POST\" action=\"update_task_status.php\">
                                 <input type=\"hidden\" name=\"task_id\" value=\"{$task_row['task_id']}\">
                                 <input type=\"hidden\" name=\"redirect_to\" value=\"index.php\">
-                                <select name=\"status\" onchange=\"this.form.submit()\">
-                                    <option value=\"not started\" $s_not_started>Not Started</option>
-                                    <option value=\"busy\" $s_busy>Busy</option>
-                                    <option value=\"completed\" $s_completed>Completed</option>
-                                </select>
+<select name=\"status\" onchange=\"
+    if(this.value === 'completed') { 
+        playComplete(this.form); 
+    } else {
+        this.form.submit();
+    }
+\">
+    <option value=\"not started\" $s_not_started>Not Started</option>
+    <option value=\"busy\" $s_busy>Busy</option>
+    <option value=\"completed\" $s_completed>Completed</option>
+</select>
                             </form>
                         </td>
                         
@@ -204,6 +210,16 @@ while ($dl_row = mysqli_fetch_assoc($dl_res)) {
         }
         ?>
     </table>
+	
+<script>
+function playComplete(form) {
+    var audio = new Audio('complete.mp3');
+    audio.play();
+    audio.onended = function() {
+        form.submit();
+    };
+}
+</script>
 	
 </body>
 </html>
