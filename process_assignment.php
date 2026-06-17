@@ -1,7 +1,6 @@
 <?php
 session_start();
 include 'db.php';
-include 'clear_notification.php';
 
 // Security check
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
