@@ -94,7 +94,7 @@ SETTINGS
 	<div style="margin: 15px 0; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
 		<strong>Project Progress:</strong> <?php echo $percentage; ?>% (<?php echo $completed_tasks; ?> of <?php echo $total_tasks; ?> tasks completed)
 		<div style="width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-top: 5px; height: 20px; overflow: hidden; border: 1px solid #ccc;">
-			<div style="width: <?php echo $percentage; ?>%; background-color: #4CAF50; height: 100%; transition: width 0.4s ease;"></div>
+			<div style="width: <?php echo $percentage; ?>%; background-color: #FCB0B3; height: 100%; transition: width 0.4s ease;"></div>
 		</div>
 	</div>	
 
