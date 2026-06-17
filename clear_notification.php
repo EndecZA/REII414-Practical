@@ -33,8 +33,6 @@ if (isset($_GET['notif_id'])) {
     mysqli_stmt_bind_param($stmt, "ii", $notif_id, $user_id);
     mysqli_stmt_execute($stmt);
 }
-
-// Redirect straight back to your main dashboard index page
 header("Location: index.php");
 exit();
 ?>

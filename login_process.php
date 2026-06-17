@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_name'] = $user['fullname'];
             $_SESSION['user_title'] = $user['title'];
 
-            // Success redirect to your index.php tracking page
             header("Location: index.php");
             exit();
         } else {
