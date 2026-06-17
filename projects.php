@@ -71,6 +71,32 @@ SETTINGS
 </a>
 
 </div>
+	
+	<?php
+	$total_query = mysqli_query($conn, "SELECT COUNT(*) AS total FROM tasks t 
+										JOIN phases p ON t.phase_id = p.id 
+										WHERE p.project_id = $selected_project_id");
+	$total_row = mysqli_fetch_assoc($total_query);
+	$total_tasks = intval($total_row['total']);
+
+	
+	$completed_query = mysqli_query($conn, "SELECT COUNT(*) AS completed FROM tasks t 
+											JOIN phases p ON t.phase_id = p.id 
+											WHERE p.project_id = $selected_project_id AND t.status = 'completed'");
+	$completed_row = mysqli_fetch_assoc($completed_query);
+	$completed_tasks = intval($completed_row['completed']);
+
+	$percentage = 0;
+	if ($total_tasks > 0) {
+		$percentage = round(($completed_tasks / $total_tasks) * 100);
+	}
+	?>
+	<div style="margin: 15px 0; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+		<strong>Project Progress:</strong> <?php echo $percentage; ?>% (<?php echo $completed_tasks; ?> of <?php echo $total_tasks; ?> tasks completed)
+		<div style="width: 100%; background-color: #e0e0e0; border-radius: 10px; margin-top: 5px; height: 20px; overflow: hidden; border: 1px solid #ccc;">
+			<div style="width: <?php echo $percentage; ?>%; background-color: #4CAF50; height: 100%; transition: width 0.4s ease;"></div>
+		</div>
+	</div>	
 
       <div class="content-box">
 		   <?php if ($current_tab == 'settings'): ?>
